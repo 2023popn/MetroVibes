@@ -22,17 +22,15 @@ class Line:
         x_diff = last_x - station.x
         y_diff = last_y - station.y
 
-        if abs(x_diff) == abs(y_diff):
-            return
-
-        if abs(x_diff) > abs(y_diff):
-            new_x = self.path_points[-1][0] - abs(y_diff) * x_diff/abs(x_diff)
-            new_y = self.path_points[-1][1] - y_diff
-            self.path_points.append((new_x, new_y))
-        elif abs(x_diff) < abs(y_diff):
-            new_x = self.path_points[-1][0] - x_diff
-            new_y = self.path_points[-1][1] - abs(x_diff) * y_diff/abs(y_diff)
-            self.path_points.append((new_x, new_y))
+        if x_diff != 0 and y_diff != 0:
+            if abs(x_diff) > abs(y_diff):
+                new_x = self.path_points[-1][0] - abs(y_diff) * x_diff/abs(x_diff)
+                new_y = self.path_points[-1][1] - y_diff
+                self.path_points.append((new_x, new_y))
+            elif abs(x_diff) < abs(y_diff):
+                new_x = self.path_points[-1][0] - x_diff
+                new_y = self.path_points[-1][1] - abs(x_diff) * y_diff/abs(y_diff)
+                self.path_points.append((new_x, new_y))
 
         self.path_points.append((station.x, station.y))
 
