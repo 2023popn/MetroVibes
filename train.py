@@ -1,5 +1,6 @@
 import pygame
-from settings import TRAIN_SIZE, TRAIN_SPEED
+import math
+from settings import TRAIN_SPEED, TRAIN_WIDTH, TRAIN_LENGTH
 
 class Train:
     def __init__(self, line):
@@ -37,8 +38,27 @@ class Train:
         y = a[1] + (b[1] - a[1]) * self.progress
         return x, y
 
+    def get_angle(self):
+        points = self.line.path_points
+        a = points[self.segment_index]
+        b = points[self.segment_index + self.direction]
+        dx = b[0] - a[0]
+        dy = b[1] - a[1]
+        # pygame's y-axis is flipped vs standard math, and rotate() is counter-clockwise
+        angle = -math.degrees(math.atan2(dy, dx))
+        return angle
+
     def draw(self, screen):
         x, y = self.get_position()
-        rect = pygame.Rect(0, 0, TRAIN_SIZE, TRAIN_SIZE)
-        rect.center = (int(x), int(y))
-        pygame.draw.rect(screen, (255, 255, 255), rect)
+        angle = self.get_angle()
+
+        length = TRAIN_LENGTH  # long axis, e.g. 20
+        width = TRAIN_WIDTH  # short axis, e.g. 10
+
+        # draw un-rotated, pointing along +x, on a transparent surface
+        train_surface = pygame.Surface((length, width), pygame.SRCALPHA)
+        pygame.draw.rect(train_surface, (255, 255, 255), (0, 0, length, width))
+
+        rotated = pygame.transform.rotate(train_surface, angle)
+        rect = rotated.get_rect(center=(int(x), int(y)))
+        screen.blit(rotated, rect)
