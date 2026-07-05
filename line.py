@@ -1,6 +1,6 @@
 import pygame
 from fillet import make_fillet
-from settings import LINE_FILLET_RADIUS
+from settings import LINE_WIDTH, LINE_FILLET_RADIUS
 
 class Line:
     def __init__(self, name, color):
@@ -57,6 +57,6 @@ class Line:
         if len(self.stations) < 2:
             return
         points = [(p[0], p[1]) for p in self.path_points]
-        pygame.draw.lines(screen, self.color, False, points, 3)
+        pygame.draw.lines(screen, self.color, False, points, LINE_WIDTH)
         for train in self.trains:
             train.draw(screen)

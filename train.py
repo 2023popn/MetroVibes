@@ -20,6 +20,9 @@ class Train:
         seg_length = ((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2) ** 0.5
         if seg_length == 0:
             self.segment_index += self.direction
+            # bounce back and forth at line ends
+            if self.segment_index <= 0 or self.segment_index >= len(points) - 1:
+                self.direction *= -1
             return
 
         self.progress += (TRAIN_SPEED * dt) / seg_length
