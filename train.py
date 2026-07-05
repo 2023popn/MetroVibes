@@ -18,6 +18,7 @@ class Train:
         b = points[self.segment_index + self.direction]
         seg_length = ((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2) ** 0.5
         if seg_length == 0:
+            self.segment_index += self.direction
             return
 
         self.progress += (TRAIN_SPEED * dt) / seg_length

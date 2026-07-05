@@ -38,7 +38,6 @@ class Line:
             elif abs(x_diff) < abs(y_diff):
                 corner_x = self.path_points[-1][0] - x_diff
                 corner_y = self.path_points[-1][1] - abs(x_diff) * y_diff / abs(y_diff)
-                self.path_points.append((corner_x, corner_y))
 
                 arc_points = make_fillet((last_x, last_y),
                                          (corner_x, corner_y),

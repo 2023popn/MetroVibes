@@ -61,7 +61,12 @@ def make_fillet(prev_point, corner, next_point, radius):
         for i in range(steps + 1)
     ]
 
-    if abs(a1) < abs(a2):
+    # ensure the arc starts at p1 (tangent point on the incoming segment)
+    # rather than trusting raw angle comparisons, which don't generalize
+    # across corners in different screen quadrants
+    dist_start_to_p1 = math.hypot(arc_points[0][0] - p1[0], arc_points[0][1] - p1[1])
+    dist_start_to_p2 = math.hypot(arc_points[0][0] - p2[0], arc_points[0][1] - p2[1])
+    if dist_start_to_p2 < dist_start_to_p1:
         arc_points.reverse()
 
     # pygame.draw.lines(screen, color, False, arc_points, thickness)
