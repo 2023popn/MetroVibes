@@ -8,4 +8,5 @@ TRAIN_SIZE = 6
 TRAIN_SPEED = 40  # pixels per second
 
 LINE_COLORS = [(230, 60, 60), (60, 140, 230), (60, 200, 100)]
+LINE_FILLET_RADIUS = 50
 BG_COLOR = (25, 25, 30)

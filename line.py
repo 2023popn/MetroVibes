@@ -1,4 +1,6 @@
 import pygame
+from fillet import make_fillet
+from settings import LINE_FILLET_RADIUS
 
 class Line:
     def __init__(self, name, color):
@@ -24,13 +26,26 @@ class Line:
 
         if x_diff != 0 and y_diff != 0:
             if abs(x_diff) > abs(y_diff):
-                new_x = self.path_points[-1][0] - abs(y_diff) * x_diff/abs(x_diff)
-                new_y = self.path_points[-1][1] - y_diff
-                self.path_points.append((new_x, new_y))
+                corner_x = self.path_points[-1][0] - abs(y_diff) * x_diff / abs(x_diff)
+                corner_y = self.path_points[-1][1] - y_diff
+
+                arc_points = make_fillet((last_x, last_y),
+                            (corner_x, corner_y),
+                            (station.x, station.y),
+                            LINE_FILLET_RADIUS)
+
+                self.path_points += arc_points
             elif abs(x_diff) < abs(y_diff):
-                new_x = self.path_points[-1][0] - x_diff
-                new_y = self.path_points[-1][1] - abs(x_diff) * y_diff/abs(y_diff)
-                self.path_points.append((new_x, new_y))
+                corner_x = self.path_points[-1][0] - x_diff
+                corner_y = self.path_points[-1][1] - abs(x_diff) * y_diff / abs(y_diff)
+                self.path_points.append((corner_x, corner_y))
+
+                arc_points = make_fillet((last_x, last_y),
+                                         (corner_x, corner_y),
+                                         (station.x, station.y),
+                                         LINE_FILLET_RADIUS)
+
+                self.path_points += arc_points
 
         self.path_points.append((station.x, station.y))
 
