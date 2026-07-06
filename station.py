@@ -1,5 +1,5 @@
 import pygame
-from settings import STATION_RADIUS
+from settings import STATION_RADIUS, TEXT_COLOR
 
 class Station:
     def __init__(self, name, x, y, is_interchange = False):
@@ -19,3 +19,9 @@ class Station:
 
     def draw(self, screen):
         pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), STATION_RADIUS)
+
+        game_font = pygame.font.Font(None, 20)
+        text_surface = game_font.render(self.name, True, TEXT_COLOR)
+
+        text_rect = text_surface.get_rect(center=(int(self.x), int(self.y)))
+        screen.blit(text_surface, text_rect)
