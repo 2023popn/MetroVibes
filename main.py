@@ -20,7 +20,7 @@ def generate_interchange_stations(world, num_stations):
     for i in range(num_stations):
         station_x = truncated_normal_randomization(0, SCREEN_WIDTH)
         station_y = truncated_normal_randomization(0, SCREEN_HEIGHT)
-        station = Station(get_unique_station_name(), station_x, station_y)
+        station = Station(get_unique_station_name(), station_x, station_y, True)
         world.add_station(station)
 
 def build_demo_world():
