@@ -1,8 +1,13 @@
 class World:
     def __init__(self):
+        self.interchange_stations = []
         self.stations = []
         self.lines = []
         self.trains = []
+
+    def add_interchange_station(self, interchange_station):
+        self.interchange_stations.append(interchange_station)
+        self.add_station(interchange_station)
 
     def add_station(self, station):
         self.stations.append(station)

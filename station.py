@@ -46,6 +46,10 @@ class Station:
         screen.blit(text_surface, text_rect)
 
     def draw(self, screen):
+        if self.is_interchange:
+            pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), STATION_RADIUS+8)
+            pygame.draw.circle(screen, (0, 0, 0), (int(self.x), int(self.y)), STATION_RADIUS + 4)
+
         pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), STATION_RADIUS)
 
         self.draw_name(screen)

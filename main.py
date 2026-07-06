@@ -21,7 +21,21 @@ def generate_interchange_stations(world, num_stations):
         station_x = truncated_normal_randomization(0, SCREEN_WIDTH)
         station_y = truncated_normal_randomization(0, SCREEN_HEIGHT)
         station = Station(get_unique_station_name(), station_x, station_y, True)
-        world.add_station(station)
+        world.add_interchange_station(station)
+
+def generate_line_with_minor_stations(world):
+    total_num_interchanges = len(world.interchange_stations)
+
+    weights = []
+    while len(weights) < total_num_interchanges - 1:
+        weights = [x * 2 for x in weights]
+        weights.append(1)
+
+    num_line_interchanges = random.choices(range(2, total_num_interchanges+1), weights=weights, k=1)
+    line_interchanges = random.sample(world.interchange_stations, k=num_line_interchanges)
+
+
+
 
 def build_demo_world():
     world = World()
