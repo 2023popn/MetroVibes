@@ -1,5 +1,6 @@
 import ctypes
 import platform
+import random
 
 if platform.system() == "Windows":
     try:
@@ -8,23 +9,27 @@ if platform.system() == "Windows":
         ctypes.windll.user32.SetProcessDPIAware()  # fallback for older Windows
 
 import pygame
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, BG_COLOR, LINE_COLORS
+from settings import *
+from helpers import *
 from world import World
 from station import Station
 from line import Line
 from train import Train
 
+def generate_interchange_stations(world, num_stations):
+    for i in range(num_stations):
+        station_x = truncated_normal_randomization(0, SCREEN_WIDTH)
+        station_y = truncated_normal_randomization(0, SCREEN_HEIGHT)
+        station = Station(get_unique_station_name(), station_x, station_y)
+        world.add_station(station)
+
 def build_demo_world():
     world = World()
 
-    s1 = Station("A", 150, 300)
-    s2 = Station("B", 400, 150)
-    s3 = Station("C", 650, 300)
-    for s in (s1, s2, s3):
-        world.add_station(s)
+    generate_interchange_stations(world, 3)
 
     red_line = Line("Red", LINE_COLORS[0])
-    for s in (s1, s2, s3):
+    for s in world.stations:
         red_line.add_station(s)
     world.add_line(red_line)
 

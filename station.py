@@ -2,12 +2,13 @@ import pygame
 from settings import STATION_RADIUS
 
 class Station:
-    def __init__(self, name, x, y):
+    def __init__(self, name, x, y, is_interchange = False):
         self.name = name
         self.x = x
         self.y = y
         self.waiting_passengers = []  # list[Passenger]
         self.lines = []               # list[Line] passing through here
+        self.is_interchange = is_interchange
 
     def add_line(self, line):
         if line not in self.lines:
