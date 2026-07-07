@@ -3,12 +3,22 @@ import math
 from settings import TRAIN_SPEED, TRAIN_WIDTH, TRAIN_LENGTH
 
 class Train:
-    def __init__(self, line):
+    def __init__(self, line, initial_station):
         self.line = line
         self.passengers = []
-        self.segment_index = 0   # which pair of points we're between
+        self.segment_index = self.set_starting_segment(initial_station)   # which pair of points we're between
         self.progress = 0.0      # 0.0 to 1.0 along current segment
         self.direction = 1       # 1 forward, -1 backward along the line
+
+        if self.segment_index >= len(self.line.path_points):
+            self.direction *= -1
+
+    def set_starting_segment(self, initial_station):
+        points = self.line.path_points
+        initial_point = (initial_station.x, initial_station.y)
+
+        initial_segment_index = points.index(initial_point)
+        return initial_segment_index
 
     def update(self, dt):
         points = self.line.path_points

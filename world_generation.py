@@ -55,7 +55,7 @@ def generate_line_with_minor_stations(world):
             num_stations = random.choice(range(available_stations + 1))
 
             for j in range(num_stations):
-                new_station_x = round(minor_station_start_x + STATION_MIN_SPACING * j, -1)
+                new_station_x = round(minor_station_start_x + STATION_MIN_SPACING * j * abs(available_x_space) / available_x_space, -1)
                 new_station_y = round(minor_station_start_y, -1)
 
                 new_stations.append(Station(get_unique_station_name(), new_station_x, new_station_y))
@@ -68,7 +68,7 @@ def generate_line_with_minor_stations(world):
 
             for j in range(num_stations):
                 new_station_x = round(minor_station_start_x, -1)
-                new_station_y = round(minor_station_start_y + STATION_MIN_SPACING * j, -1)
+                new_station_y = round(minor_station_start_y + STATION_MIN_SPACING * j * abs(available_y_space) / available_y_space, -1)
 
                 new_stations.append(Station(get_unique_station_name(), new_station_x, new_station_y))
 
@@ -94,5 +94,5 @@ def generate_line_with_minor_stations(world):
     world.add_line(new_line)
 
     starting_station = random.choice(new_line.stations)
-    new_train = Train(new_line)
+    new_train = Train(new_line, starting_station)
     world.add_train(new_train)
