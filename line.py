@@ -7,12 +7,15 @@ class Line:
         self.name = name
         self.color = color
         self.stations = []  # ordered list[Station]
+        self.station_points = []
         self.trains = []    # list[Train] currently running on this line
         self.path_points = [] # station and interpolation points to make the actual path
 
     def add_station(self, station):
         self.stations.append(station)
         station.add_line(self)
+
+        self.station_points.append((station.x, station.y))
 
         if len(self.stations) == 1:
             self.path_points.append((station.x, station.y))
