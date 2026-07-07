@@ -14,6 +14,9 @@ class World:
 
     def add_line(self, line):
         self.lines.append(line)
+        for station in line.stations:
+            if station not in self.stations:
+                self.add_station(station)
 
     def add_train(self, train):
         self.trains.append(train)
