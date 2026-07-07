@@ -20,6 +20,7 @@ class Station:
         self.waiting_passengers = []  # list[Passenger]
         self.lines = []               # list[Line] passing through here
         self.is_interchange = is_interchange
+        self._label_cache = None  # (text_surface, text_rect), computed lazily
 
     def create_text_objects(self):
         angle = find_open_angle(get_line_angles_at_station(self))
@@ -37,11 +38,14 @@ class Station:
     def add_line(self, line):
         if line not in self.lines:
             self.lines.append(line)
+            self._label_cache = None  # topology changed — recompute next draw
 
     def update(self, dt):
         pass  # station logic later (spawn passengers, etc.)
 
     def draw_name(self, screen):
+        if self._label_cache is None:
+            self._label_cache = self.create_text_objects()
         text_surface, text_rect = self.create_text_objects()
         screen.blit(text_surface, text_rect)
 
