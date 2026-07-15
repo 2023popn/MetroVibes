@@ -93,6 +93,6 @@ def generate_line_with_minor_stations(world):
         new_line.add_station(station)
     world.add_line(new_line)
 
-    starting_station = random.choice(new_line.stations)
+    starting_station = None #random.choice(new_line.stations)
     new_train = Train(new_line, starting_station)
     world.add_train(new_train)
